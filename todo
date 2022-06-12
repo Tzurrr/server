@@ -1,0 +1,2 @@
+# add a config file that includes paths, etc.
+# switch the arrays in the client to dicts so the iteration will be cheaper
