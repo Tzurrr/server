@@ -11,7 +11,7 @@ import json_parser
 app = FastAPI()
 
 @app.post("/")
-async def upload(files: List[UploadFile] = File(...)):
+async def listen_for_uploaded_files(files: List[UploadFile] = File(...)):
     filename = file_merger.merge_halfs(files)
     elogger.write_logs_to_elastic("wrote")
     encryptor.encrypt(filename)
