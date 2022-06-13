@@ -1,0 +1,11 @@
+{
+	"kibanas_url": "http://13.81.211.207:9200",
+	"HAProxys_url": "http://127.0.0.1:80/",
+	"logfile_path": "/home/tzur/final-client/elvis.json",
+	"photos_dir": "/home/tzur/all-the-photos",
+	"redis_conf": {
+		"host": "localhost",
+		"port": 6379,
+		"charset": "utf-8"
+			}
+}
