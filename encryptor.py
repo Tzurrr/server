@@ -19,6 +19,5 @@ def encrypt(filename):
     final_obj = base64.b64encode(obj.encrypt(a.encode()))
 
     with open(filename, "ab") as file:
-        print((iv, final_obj))
         file.writelines([iv, final_obj])
 
