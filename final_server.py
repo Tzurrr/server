@@ -18,7 +18,7 @@ async def upload(files: List[UploadFile] = File(...)):
     with open (f"/home/tzur/all-the-photos/{file.filename[:dot-2]}.jpg", "wb") as file:
         file.writelines(contents)
         filename = file.name
-    elogger.write("wrote")
+    elogger.write_logs_to_elastic("wrote")
     encryptor.encrypt(filename)
     return {"message": f"Successfuly uploaded {[file.filename for file in files]}"}
 
