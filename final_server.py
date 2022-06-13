@@ -4,6 +4,7 @@ from typing import List
 import find_dot
 import encryptor
 import elogger
+import os
 
 app = FastAPI()
 
@@ -11,11 +12,9 @@ app = FastAPI()
 async def upload(files: List[UploadFile] = File(...)):
     contents = []
     for file in files:
-        await file.seek(0)
         contents.append(await file.read())
         await file.close()
-        dot = find_dot.find(file.filename)
-    with open (f"/home/tzur/all-the-photos/{file.filename[:dot-2]}.jpg", "wb") as file:
+    with open (f"/home/tzur/all-the-photos/{os.path.splitext(file.filename)[0]}.jpg", "wb") as file:
         file.writelines(contents)
         filename = file.name
     elogger.write_logs_to_elastic("wrote")
