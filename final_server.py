@@ -6,6 +6,7 @@ import encryptor
 import elogger
 import os
 import file_merger
+import json_parser
 
 app = FastAPI()
 
@@ -17,5 +18,7 @@ async def upload(files: List[UploadFile] = File(...)):
     return {"message": f"Successfuly uploaded {[file.filename for file in files]}"}
 
 if __name__ == '__main__':
-    uvicorn.run(app, host='0.0.0.0', port=8000)
+    conf = json_parser.parse_json_to_var("/home/tzur/server/config.json")
+    app_conf = conf["apps_configuration"]
+    uvicorn.run(app, host=apps_conf["host"], port=apps_conf["port"])
 
