@@ -11,7 +11,7 @@ async def merge_files(uploaded_files):
     for file in uploaded_files:
         contents.append(await file.read())
         await file.close()
-    with open (f"/home/tzur/all-the-photos/{os.path.splitext(file.filename)[0][:-2]}.jpg", "wb") as file:
+    with open (f"../all-the-photos/{os.path.splitext(file.filename)[0][:-2]}.jpg", "wb") as file:
         file.writelines(contents)
         filename = file.name
     return filename
