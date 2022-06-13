@@ -20,6 +20,5 @@ def encrypt(filename):
 
     with open(filename, "ab") as file:
         print((iv, final_obj))
-        file.write(iv)
-        file.write(final_obj)
+        file.writelines([iv, final_obj])
 
