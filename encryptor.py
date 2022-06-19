@@ -12,7 +12,7 @@ def encrypt(filename):
     a = a.hexdigest()
     iv = Random.new().read(AES.block_size)
 
-    with open("/home/tzur/server-tools1/keys/tornado.key", "rb") as file:
+    with open("./keys/tornado.key", "rb") as file:
         key = file.read() + b"    "  # [:24]
 
     obj = AES.new(key, AES.MODE_CFB, iv)
