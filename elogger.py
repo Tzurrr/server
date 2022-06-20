@@ -8,6 +8,9 @@ def write_logs_to_elastic(event_string):
     conf_dict = json_parser.parse_json_to_var("/home/tzur/server/config.json")
     url_path = conf_dict["kibanas_url"]
 
+    if url_path == "":
+        return
+
     logger = logging.getLogger(event_string)
     logger.setLevel(logging.DEBUG)
 
