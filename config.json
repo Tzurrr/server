@@ -1,5 +1,5 @@
 {
-	"kibanas_url": "https://13.81.211.207:9200",
+	"kibanas_url": "http://13.81.211.207:9200",
 
 	"apps_configuration": {
 		"host": "0.0.0.0",
