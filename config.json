@@ -1,0 +1,11 @@
+{
+	"kibanas_url": "http://13.81.211.207:9200",
+
+	"apps_configuration": {
+		"host": "0.0.0.0",
+		"port": 8000
+	},
+
+	"logfile_path": "/home/tzur/server/elvis.json",
+	"photos_dir": "/home/tzur/all-the-photos"
+}
