@@ -8,10 +8,14 @@ import json_parser
 
 
 class MoreFilesThanExcpectedException(Exception):
-    pass
+    def __init__(self):
+        message = "More Files than Excpected"
+        super(MoreFilesThanExcpectedException, self).__init__(message)
 
 class LessFilesThanExcpectedException(Exception):
-    pass
+    def __init__(self):
+        message = "Less Files than Excpected"
+        super(LessFilesThanExcpectedException, self).__init__(message)
 
 async def merge_files(uploaded_files):
     contents = []
