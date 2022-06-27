@@ -51,7 +51,8 @@ class TestInotify(unittest.TestCase):
         self.assertRaises(Exception, final_server)
     
     def test_with_zero_files(self):
-        requests.post(url=self.url_path, files=[])
+        resp = requests.post(url="http://0.0.0.0:8000", files=[])
+        self.assertEqual(resp.status_code, 422)
 
     def tearDown(self):
         os.remove("file1_a.txt")
