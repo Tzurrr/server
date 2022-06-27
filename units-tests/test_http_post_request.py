@@ -3,11 +3,13 @@ import final_server
 import requests
 import encryptor
 import os
-
+import json_parser
 
 class TestInotify(unittest.TestCase):
     def setUp(self):
-        self.url_path = "http://0.0.0.0:8000/"
+        conf = json_parser.parse_json_to_var("./config.json")
+        ip_address = conf["kibanas_url"]
+        self.url_path = ip_address
 
         with open("file1_a.txt", "wb+") as file:
             file.write(b"a")
