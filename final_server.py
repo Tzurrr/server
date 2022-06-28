@@ -7,6 +7,16 @@ import os
 import json_parser
 
 
+class MoreFilesThanExcpectedException(Exception):
+    def __init__(self):
+        message = "More Files than Excpected"
+        super(MoreFilesThanExcpectedException, self).__init__(message)
+
+class LessFilesThanExcpectedException(Exception):
+    def __init__(self):
+        message = "Less Files than Excpected"
+        super(LessFilesThanExcpectedException, self).__init__(message)
+
 async def merge_files(uploaded_files):
     contents = []
     for file in uploaded_files:
@@ -27,7 +37,10 @@ app = FastAPI()
 @app.post("/")
 async def listen_for_uploaded_files(files: List[UploadFile] = File(...)):
     if len(files) < 2:
-        return {"message": f"At least 2 files expected"}
+        raise LessFilesThanExcpectedException
+
+    elif len(files) > 2:
+        raise MoreFilesThanExcpectedException
 
     merged_file_name = await merge_files(files)
     elogger.write_logs_to_elastic("wrote")
