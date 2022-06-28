@@ -4,12 +4,13 @@ import requests
 import encryptor
 import os
 import json_parser
+import threading
+import time
+
 
 class TestInotify(unittest.TestCase):
     def setUp(self):
-        conf = json_parser.parse_json_to_var("./config.json")
-        ip_address = conf["kibanas_url"]
-        self.url_path = ip_address
+        self.url_path = "http://0.0.0.0:8000"
 
         with open("file1_a.txt", "wb+") as file:
             file.write(b"a")
@@ -21,7 +22,9 @@ class TestInotify(unittest.TestCase):
     def test_merge(self):
         arr = [("files", open(self.filepath, "rb")), ("files", open(self.filename_from_redis, "rb"))]
         requests.post(url=self.url_path, files=arr)
-        
+       
+        time.sleep(1)
+
         with open("../all-the-photos/file1.jpg", "rb") as file:
             contents = file.read()
 
@@ -51,7 +54,29 @@ class TestInotify(unittest.TestCase):
         self.assertRaises(Exception, final_server)
     
     def test_with_zero_files(self):
-        requests.post(url=self.url_path, files=[])
+        resp = requests.post(url=self.url_path, files=[])
+        self.assertEqual(resp.status_code, 422)
+
+    def test_with_multiple_requests_simultaneously(self):
+        threads_arr = []
+        resps_arr = []
+        def b():
+            arr = [("files", open(self.filepath, "rb")), ("files", open(self.filename_from_redis, "rb"))]
+            results = requests.post(url=self.url_path, files=arr)
+            print("b")
+            resps_arr.append(results.status_code)
+
+        for i in range(4):
+            threads_arr.append(threading.Thread(target=b))
+        for i in threads_arr:
+            i.start()
+        for i in threads_arr:
+            i.join()
+
+        for i in resps_arr:
+            print("a")
+            self.assertEqual(200, i)
+
 
     def tearDown(self):
         os.remove("file1_a.txt")
